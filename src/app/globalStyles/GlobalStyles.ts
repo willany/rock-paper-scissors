@@ -3,7 +3,10 @@
 import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
-html,
+html {
+    min-height: 100%;
+}
+
 body {
     padding: 0;
     margin: 0;

@@ -1,33 +1,63 @@
-import Image from "next/image";
 import * as Style from "./Game.styles";
-import Scissors from "../../../../public/images/icon-scissors.svg";
-import Paper from "../../../../public/images/icon-paper.svg";
-import Rock from "../../../../public/images/icon-rock.svg";
-import Lizard from "../../../../public/images/icon-lizard.svg";
-import Spock from "../../../../public/images/icon-spock.svg";
+import { Options, Option } from "..";
+import {
+  useUserSelectedOption,
+  useGameResult,
+  useMachineSelectedOption,
+  useScore,
+} from "@/app/hooks";
+import { useEffect } from "react";
 
 export const Game = () => {
+  const { userSelectedOption, handleUserSelectedOption } =
+    useUserSelectedOption();
+  const { selectedMachineOption, setSelectedMachineOption } =
+    useMachineSelectedOption();
+  const { isUserVictory } = useGameResult(
+    userSelectedOption,
+    selectedMachineOption
+  );
+  const { updateScore } = useScore();
+
+  const handlePlayAgain = () => {
+    handleUserSelectedOption("");
+    setSelectedMachineOption("");
+  };
+
+  useEffect(() => {
+    if (userSelectedOption && selectedMachineOption)
+      updateScore(isUserVictory());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userSelectedOption && selectedMachineOption]);
+
+  if (!userSelectedOption) return <Options />;
+
   return (
     <Style.Game>
-      <Style.Icon color="#ec9e0e" area="scissors" title="Scissors">
-        <Image src={Scissors} alt="Scissors" title="Scissors" />
-      </Style.Icon>
+      <Style.UserChoice>
+        <Style.Title>You picked</Style.Title>
+        <Option type={userSelectedOption} picked={true} />
+      </Style.UserChoice>
 
-      <Style.Icon color="#4865f4" area="paper" title="Paper">
-        <Image src={Paper} alt="Paper" title="Paper" />
-      </Style.Icon>
+      {userSelectedOption && selectedMachineOption && (
+        <Style.GameResult>
+          <Style.GameResultTitle>
+            {isUserVictory() ? "You win" : "You lose"}
+          </Style.GameResultTitle>
+          <Style.PlayAgainButton onClick={() => handlePlayAgain()}>
+            Play again
+          </Style.PlayAgainButton>
+        </Style.GameResult>
+      )}
 
-      <Style.Icon color="#dc2e4e" area="rock" title="Rock">
-        <Image src={Rock} alt="Rock" title="Rock" />
-      </Style.Icon>
-
-      <Style.Icon color="#834fe3" area="lizard" title="Lizard">
-        <Image src={Lizard} alt="Lizard" title="Lizard" />
-      </Style.Icon>
-
-      <Style.Icon color="#40b9ce" area="spock" title="Spock">
-        <Image src={Spock} alt="Spock" title="Spock" />
-      </Style.Icon>
+      <Style.MachineChoice>
+        <Style.Title>The house picked</Style.Title>
+        {selectedMachineOption ? (
+          <Option type={selectedMachineOption} picked={true} />
+        ) : (
+          <Style.MachineChoiceLoading />
+        )}
+      </Style.MachineChoice>
     </Style.Game>
   );
 };

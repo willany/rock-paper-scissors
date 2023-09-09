@@ -10,4 +10,8 @@ export const Button = styled.button`
     text-transform: uppercase;
     align-self: end;
     cursor: pointer;
+
+    @media (max-width: 808px) {
+    align-self: center;
+  }
 `;

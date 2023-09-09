@@ -7,4 +7,9 @@ export const MainPage = styled.main`
   justify-content: center;
   padding: 22px;
   gap: 48px;
+  
+
+  @media (max-width: 400px) {
+    padding: 2px;
+  }
 `;

@@ -7,6 +7,10 @@ export const Modal = styled.div`
     height: 480px;
     border-radius: 8px;
     padding: 22px;
+
+    @media (max-width: 808px) {
+    width: 98%;
+  }
 `;
 
 export const Header = styled.div`

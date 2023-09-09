@@ -1,15 +1,23 @@
 "use client";
 
-import { MainPage, Header, RulesButton, Game, RulesModal } from "./components";
+import {
+  MainPage,
+  Header,
+  RulesButton,
+  Game,
+  RulesModal,
+  Content,
+} from "./components";
 
 const Home = () => {
-  console.log("renderizou...");
   return (
     <MainPage>
-      <Header />
-      <Game />
-      <RulesButton />
-      <RulesModal />
+      <Content>
+        <Header />
+        <Game />
+        <RulesButton />
+        <RulesModal />
+      </Content>
     </MainPage>
   );
 };

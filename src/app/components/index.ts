@@ -1,0 +1,6 @@
+export * from './MainPage'
+export * from './Header'
+export * from './Score'
+export * from './RulesButton'
+export * from './Game'
+export * from './RulesModal'
